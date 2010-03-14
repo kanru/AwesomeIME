@@ -1,0 +1,9 @@
+=== ISSUES ===
+
+ * Delete CIN input always delete previous word
+
+=== TODO ===
+
+ * Separate CIN logic and Latin logic
+ * Dynamic loading of main.dict, [CIN].tbl
+ * Dynamic loading of customized keyboard layout
