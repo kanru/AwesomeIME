@@ -44,51 +44,26 @@ public class CinDictionary extends Dictionary {
     }
 
     private long seekStart(String q) throws IOException {
-        long l, m, cur;
+        long l, r, m = 0;
         byte[] buf = new byte[mKeySize];
 
         fd.seek(0);
         mNItems = readInt();
         mDictOffset = mHeaderSize + mItemSize * mNItems;
 
-        l = 0;
-        m = mNItems;
-        //Log.i(TAG, "N Items: " + mNItems);
-        cur = (m+l)/2;
-        while (true) {
-            fd.seek(cur*mItemSize+mHeaderSize);
+        l = -1;
+        r = mNItems;
+        while (l+1!=r) {
+            m = (r-l)/2+l;
+            fd.seek(m*mItemSize+mHeaderSize);
             fd.readFully(buf);
             String key = new String(buf);
-            //Log.i("CinDictionary", "cmp: " + key);
-            if (key.startsWith(q)) {
-                //System.out.println("nth: " + cur);
-                return cur * mItemSize + mHeaderSize;
-            } else if (key.compareTo(q) > 0) {
-                m = cur;
-            } else {
-                l = cur;
-            }
-            cur = (m+l)/2;
+            if (key.compareTo(q) < 0)
+                l = m;
+            else
+                r = m;
         }
-    }
-
-    private long wind_back(String q, long cur) throws IOException {
-        if (cur - mItemSize < mHeaderSize)
-            return cur;
-        byte[] buf = new byte[mKeySize];
-        cur -= mItemSize;
-        fd.seek(cur);
-        while (true) {
-            fd.readFully(buf);
-            String key = new String(buf);
-            if (key.startsWith(q)) {
-                cur -= mItemSize;
-                fd.seek(cur);
-                continue;
-            } else {
-                return cur + mItemSize;
-            }
-        }
+        return m * mItemSize + mHeaderSize;
     }
 
     private String readLine() throws IOException {
@@ -106,49 +81,14 @@ public class CinDictionary extends Dictionary {
         }
     }
 
-    // public void query(String q) throws IOException {
-    //     long cur = seekStart(q);
-    //     cur = wind_back(q, cur);
-
-    //     byte[] buf = new byte[mKeySize];
-    //     long nph = 0;
-    //     long pos = 0;
-    //     ArrayList<String> ret = new ArrayList<String>();
-    //     fd.seek(cur);
-    //     //System.out.println("seek: " + cur);
-    //     while (true) {
-    //         fd.readFully(buf);
-    //         if (pos == 0) {
-    //             pos = readInt();
-    //         } else {
-    //             fd.skipBytes(4);
-    //         }
-    //         String key = new String(buf);
-    //         //System.out.println(key);
-    //         if (key.startsWith(q)) {
-    //             nph += 1;
-    //         } else {
-    //             break;
-    //         }
-    //     }
-    //     fd.seek(mDictOffset + pos);
-    //     //System.out.println("seek: " + pos);
-    //     for (int i = 0; i < nph; i++) {
-    //         String v = readLine();
-    //         System.out.println(v);
-    //         ret.add(v);
-    //     }
-    // }
-
     @Override public void getWords(final WordComposer codes, final WordCallback callback) {
         try {
             CharSequence query = codes.getTypedWord();
             String q = query.toString().toLowerCase();
             long cur = seekStart(q);
-            cur = wind_back(q, cur);
 
             byte[] buf = new byte[mKeySize];
-            long nph = 0;
+            int nph = 0;
             long pos = 0;
             fd.seek(cur);
             //System.out.println("seek: " + cur);
@@ -175,7 +115,7 @@ public class CinDictionary extends Dictionary {
             for (int i = 0; i < nph; i++) {
                 String v = readLine();
                 //Log.i(TAG, "Add word: " + v);
-                callback.addWord(v.toCharArray(), 0, v.length(), i+1);
+                callback.addWord(v.toCharArray(), 0, v.length(), nph-i);
             }
         } catch (IOException e) {
             Log.e("CinDictionary", "Failed to query " + codes.getTypedWord());

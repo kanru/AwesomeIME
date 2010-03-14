@@ -173,9 +173,9 @@ public class Suggest implements Dictionary.WordCallback {
         }
         // Search the dictionary only if there are at least 2 characters
         if (wordComposer.size() > 1) {
-            // if (mCinDictionary != null) {
-            //     mCinDictionary.getWords(wordComposer, this);
-            // }
+            if (mCinDictionary != null) {
+                mCinDictionary.getWords(wordComposer, this);
+            }
             if (mUserDictionary != null || mContactsDictionary != null) {
                 if (mUserDictionary != null) {
                     mUserDictionary.getWords(wordComposer, this);
