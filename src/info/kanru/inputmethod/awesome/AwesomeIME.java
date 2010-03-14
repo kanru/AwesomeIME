@@ -769,11 +769,11 @@ public class AwesomeIME extends InputMethodService
                 //else if (TextEntryState.STATE_SPACE_AFTER_ACCEPTED) {
                 doubleSpace();
             }
-            if (pickedDefault && mBestWord != null) {
-                TextEntryState.acceptedDefault(mWord.getTypedWord(), mBestWord);
-            }
-            updateShiftKeyState(getCurrentInputEditorInfo());
         }
+        if (pickedDefault && mBestWord != null) {
+            TextEntryState.acceptedDefault(mWord.getTypedWord(), mBestWord);
+        }
+        updateShiftKeyState(getCurrentInputEditorInfo());
         if (ic != null) {
             ic.endBatchEdit();
         }
@@ -947,13 +947,15 @@ public class AwesomeIME extends InputMethodService
             ic.beginBatchEdit();
             mJustRevertedSeparator = ic.getTextBeforeCursor(1, 0);
             if (deleteChar) ic.deleteSurroundingText(1, 0);
-            int toDelete = mCommittedLength;
-            CharSequence toTheLeft = ic.getTextBeforeCursor(mCommittedLength, 0);
-            if (toTheLeft != null && toTheLeft.length() > 0 
+            if (mKeyboardSwitcher.getTextMode() != KeyboardSwitcher.MODE_TEXT_CIN) {
+                int toDelete = mCommittedLength;
+                CharSequence toTheLeft = ic.getTextBeforeCursor(mCommittedLength, 0);
+                if (toTheLeft != null && toTheLeft.length() > 0 
                     && isWordSeparator(toTheLeft.charAt(0))) {
-                toDelete--;
+                    toDelete--;
+                }
+                ic.deleteSurroundingText(toDelete, 0);
             }
-            ic.deleteSurroundingText(toDelete, 0);
             ic.setComposingText(mComposing, 1);
             TextEntryState.backspace();
             ic.endBatchEdit();

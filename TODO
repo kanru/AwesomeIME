@@ -1,6 +1,6 @@
 === ISSUES ===
 
- * Delete CIN input always delete previous word
+ * FIXED Delete CIN input always delete previous word
 
 === TODO ===
 
