@@ -806,6 +806,8 @@ public class AwesomeIME extends InputMethodService
     
     private boolean isPredictionOn() {
         boolean predictionOn = mPredictionOn;
+        if (mKeyboardSwitcher.getTextMode() == KeyboardSwitcher.MODE_TEXT_CIN)
+            predictionOn = true;
         //if (isFullscreenMode()) predictionOn &= mPredictionLandscape;
         return predictionOn;
     }
