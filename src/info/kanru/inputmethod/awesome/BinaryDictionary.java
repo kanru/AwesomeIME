@@ -70,9 +70,7 @@ public class BinaryDictionary extends Dictionary {
     private final void loadDictionary(Context context, int resId) {
         AssetManager am = context.getResources().getAssets();
         String assetName = context.getResources().getString(resId);
-        Log.e("BinaryDictionary", "YOOOOOOOOOOOOOOOOOOOOOOO I'm here");
         mNativeDict = openNative(am, assetName, TYPED_LETTER_MULTIPLIER, FULL_WORD_FREQ_MULTIPLIER);
-        Log.e("BinaryDictionary", "HhoooXXXXXXXXXXXXX I'm here");
     }
 
     @Override
