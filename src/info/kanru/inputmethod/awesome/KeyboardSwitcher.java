@@ -19,6 +19,8 @@ package info.kanru.inputmethod.awesome;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Log;
+
 public class KeyboardSwitcher {
 
     public static final int MODE_TEXT = 1;
@@ -30,7 +32,8 @@ public class KeyboardSwitcher {
     
     public static final int MODE_TEXT_QWERTY = 0;
     public static final int MODE_TEXT_ALPHA = 1;
-    public static final int MODE_TEXT_COUNT = 2;
+    public static final int MODE_TEXT_CIN = 2;
+    public static final int MODE_TEXT_COUNT = 3;
     
     public static final int KEYBOARDMODE_NORMAL = R.id.mode_normal;
     public static final int KEYBOARDMODE_URL = R.id.mode_url;
@@ -166,7 +169,10 @@ public class KeyboardSwitcher {
                 if (mTextMode == MODE_TEXT_QWERTY) {
                     return new KeyboardId(R.xml.kbd_qwerty, KEYBOARDMODE_NORMAL, true);
                 } else if (mTextMode == MODE_TEXT_ALPHA) {
+                    /* TODO: Seems not used everywhere */
                     return new KeyboardId(R.xml.kbd_alpha, KEYBOARDMODE_NORMAL, true);
+                } else if (mTextMode == MODE_TEXT_CIN) {
+                    return new KeyboardId(R.xml.kbd_cin, KEYBOARDMODE_NORMAL, true);
                 }
                 break;
             case MODE_SYMBOLS:
@@ -174,11 +180,20 @@ public class KeyboardSwitcher {
             case MODE_PHONE:
                 return new KeyboardId(R.xml.kbd_phone);
             case MODE_URL:
-                return new KeyboardId(R.xml.kbd_qwerty, KEYBOARDMODE_URL, true);
+                if (mTextMode == MODE_TEXT_QWERTY)
+                    return new KeyboardId(R.xml.kbd_qwerty, KEYBOARDMODE_URL, true);
+                else if (mTextMode == MODE_TEXT_CIN)
+                    return new KeyboardId(R.xml.kbd_cin, KEYBOARDMODE_URL, true);
             case MODE_EMAIL:
-                return new KeyboardId(R.xml.kbd_qwerty, KEYBOARDMODE_EMAIL, true);
+                if (mTextMode == MODE_TEXT_QWERTY)
+                    return new KeyboardId(R.xml.kbd_qwerty, KEYBOARDMODE_EMAIL, true);
+                else if (mTextMode == MODE_TEXT_CIN)
+                    return new KeyboardId(R.xml.kbd_cin, KEYBOARDMODE_EMAIL, true);
             case MODE_IM:
-                return new KeyboardId(R.xml.kbd_qwerty, KEYBOARDMODE_IM, true);
+                if (mTextMode == MODE_TEXT_QWERTY)
+                    return new KeyboardId(R.xml.kbd_qwerty, KEYBOARDMODE_IM, true);
+                else if (mTextMode == MODE_TEXT_CIN)
+                    return new KeyboardId(R.xml.kbd_cin, KEYBOARDMODE_IM, true);
         }
         return null;
     }
@@ -238,6 +253,26 @@ public class KeyboardSwitcher {
 
     void toggleSymbols() {
         setKeyboardMode(mMode, mImeOptions, !mIsSymbols);
+        if (mIsSymbols && !mPreferSymbols) {
+            mSymbolsModeState = SYMBOLS_MODE_STATE_BEGIN;
+        } else {
+            mSymbolsModeState = SYMBOLS_MODE_STATE_NONE;
+        }
+    }
+
+    void setAlphaMode() {
+        mTextMode = MODE_TEXT_QWERTY;
+        setKeyboardMode(mMode, mImeOptions, false);
+        if (mIsSymbols && !mPreferSymbols) {
+            mSymbolsModeState = SYMBOLS_MODE_STATE_BEGIN;
+        } else {
+            mSymbolsModeState = SYMBOLS_MODE_STATE_NONE;
+        }
+    }
+
+    void setCinMode() {
+        mTextMode = MODE_TEXT_CIN;
+        setKeyboardMode(mMode, mImeOptions, false);
         if (mIsSymbols && !mPreferSymbols) {
             mSymbolsModeState = SYMBOLS_MODE_STATE_BEGIN;
         } else {

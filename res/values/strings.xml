@@ -179,6 +179,8 @@
     <string name="label_phone_key">123</string>
     <!-- Label for "switch to alphabetic" key.  Must be short to fit on key! -->
     <string name="label_alpha_key">ABC</string>
+    <!-- Label for "switch to cin" key.  Must be short to fit on key! -->
+    <string name="label_cin_key">CIN</string>
     <!-- Label for ALT modifier key.  Must be short to fit on key! -->
     <string name="label_alt_key">ALT</string>
 

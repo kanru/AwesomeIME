@@ -198,7 +198,7 @@ public class AwesomeIME extends InputMethodService
             mCinDictionary = new CinDictionary("/sdcard/NewCJ3.tbl");
         } catch (IOException e) {}
         mSuggest.setUserDictionary(mUserDictionary);
-    //mSuggest.setContactsDictionary(mContactsDictionary);
+        //mSuggest.setContactsDictionary(mContactsDictionary);
         mSuggest.setAutoDictionary(mAutoDictionary);
         mSuggest.setCinDictionary(mCinDictionary);
         mWordSeparators = getResources().getString(R.string.word_separators);
@@ -617,6 +617,12 @@ public class AwesomeIME extends InputMethodService
                     toggleCapsLock();
                 }
                 break;
+            case LatinKeyboardView.KEYCODE_ALPHA_MODE:
+                mKeyboardSwitcher.setAlphaMode();
+                break;
+            case LatinKeyboardView.KEYCODE_CIN_MODE:
+                mKeyboardSwitcher.setCinMode();
+                break;
             case Keyboard.KEYCODE_MODE_CHANGE:
                 changeKeyboardMode();
                 break;
@@ -693,7 +699,8 @@ public class AwesomeIME extends InputMethodService
     }
     
     private void handleCharacter(int primaryCode, int[] keyCodes) {
-        if (isAlphabet(primaryCode) && isPredictionOn() && !isCursorTouchingWord()) {
+        if (mKeyboardSwitcher.getTextMode() == KeyboardSwitcher.MODE_TEXT_CIN ||
+            isAlphabet(primaryCode) && isPredictionOn() && !isCursorTouchingWord()) {
             if (!mPredicting) {
                 mPredicting = true;
                 mComposing.setLength(0);
@@ -745,23 +752,28 @@ public class AwesomeIME extends InputMethodService
                             || mJustRevertedSeparator.charAt(0) != primaryCode)) {
                 pickDefaultSuggestion();
                 pickedDefault = true;
+            } else if (mKeyboardSwitcher.getTextMode() == KeyboardSwitcher.MODE_TEXT_CIN) {
+                pickDefaultSuggestion();
+                pickedDefault = true;
             } else {
                 commitTyped(ic);
             }
         }
-        sendKeyChar((char)primaryCode);
-        TextEntryState.typedCharacter((char) primaryCode, true);
-        if (TextEntryState.getState() == TextEntryState.STATE_PUNCTUATION_AFTER_ACCEPTED 
+        if (mKeyboardSwitcher.getTextMode() != KeyboardSwitcher.MODE_TEXT_CIN) {
+            sendKeyChar((char)primaryCode);
+            TextEntryState.typedCharacter((char) primaryCode, true);
+            if (TextEntryState.getState() == TextEntryState.STATE_PUNCTUATION_AFTER_ACCEPTED 
                 && primaryCode != KEYCODE_ENTER) {
-            swapPunctuationAndSpace();
-        } else if (isPredictionOn() && primaryCode == ' ') { 
-        //else if (TextEntryState.STATE_SPACE_AFTER_ACCEPTED) {
-            doubleSpace();
+                swapPunctuationAndSpace();
+            } else if (isPredictionOn() && primaryCode == ' ') { 
+                //else if (TextEntryState.STATE_SPACE_AFTER_ACCEPTED) {
+                doubleSpace();
+            }
+            if (pickedDefault && mBestWord != null) {
+                TextEntryState.acceptedDefault(mWord.getTypedWord(), mBestWord);
+            }
+            updateShiftKeyState(getCurrentInputEditorInfo());
         }
-        if (pickedDefault && mBestWord != null) {
-            TextEntryState.acceptedDefault(mWord.getTypedWord(), mBestWord);
-        }
-        updateShiftKeyState(getCurrentInputEditorInfo());
         if (ic != null) {
             ic.endBatchEdit();
         }
@@ -813,7 +825,11 @@ public class AwesomeIME extends InputMethodService
             return;
         }
 
-        List<CharSequence> stringList = mSuggest.getSuggestions(mInputView, mWord, false);
+        List<CharSequence> stringList;
+        if (mKeyboardSwitcher.getTextMode() == KeyboardSwitcher.MODE_TEXT_CIN)
+            stringList = mSuggest.getCinSuggestions(mInputView, mWord);
+        else
+            stringList = mSuggest.getSuggestions(mInputView, mWord, false);
         boolean correctionAvailable = mSuggest.hasMinimalCorrection();
         //|| mCorrectionMode == mSuggest.CORRECTION_FULL;
         CharSequence typedWord = mWord.getTypedWord();
@@ -829,6 +845,9 @@ public class AwesomeIME extends InputMethodService
         if (stringList.size() > 0) {
             if (correctionAvailable && !typedWordValid && stringList.size() > 1) {
                 mBestWord = stringList.get(1);
+            } else if (mKeyboardSwitcher.getTextMode() == KeyboardSwitcher.MODE_TEXT_CIN &&
+                       stringList.size() > 0) {
+                mBestWord = stringList.get(0);
             } else {
                 mBestWord = typedWord;
             }
@@ -844,6 +863,7 @@ public class AwesomeIME extends InputMethodService
             mHandler.removeMessages(MSG_UPDATE_SUGGESTIONS);
             updateSuggestions();
         }
+        //Log.i("AcinIME", "mBestWord: " + mBestWord);
         if (mBestWord != null) {
             TextEntryState.acceptedDefault(mWord.getTypedWord(), mBestWord);
             mJustAccepted = true;
@@ -869,11 +889,12 @@ public class AwesomeIME extends InputMethodService
         pickSuggestion(suggestion);
         TextEntryState.acceptedSuggestion(mComposing.toString(), suggestion);
         // Follow it with a space
-        if (mAutoSpace) {
+        if (mAutoSpace &&
+            mKeyboardSwitcher.getTextMode() != KeyboardSwitcher.MODE_TEXT_CIN) {
             sendSpace();
+            // Fool the state watcher so that a subsequent backspace will not do a revert
+            TextEntryState.typedCharacter((char) KEYCODE_SPACE, true);
         }
-        // Fool the state watcher so that a subsequent backspace will not do a revert
-        TextEntryState.typedCharacter((char) KEYCODE_SPACE, true);
     }
     
     private void pickSuggestion(CharSequence suggestion) {

@@ -114,7 +114,7 @@
                 android:popupKeyboard="@xml/kbd_popup_template"
                 android:popupCharacters="_"
                 android:keyWidth="15%p" android:keyEdgeFlags="left"/>
-        <Key android:codes="-103" android:keyLabel="@string/label_cin_key" 
+        <Key android:codes="-102" android:keyLabel="@string/label_alpha_key"
                 android:popupCharacters="_"
                 android:keyWidth="15%p"/>
         <Key android:keyLabel="," android:keyWidth="10%p" />
@@ -133,14 +133,14 @@
                 android:popupKeyboard="@xml/kbd_popup_template"
                 android:popupCharacters="_"
                 android:keyWidth="15%p" android:keyEdgeFlags="left"/>
-        <Key android:codes="-103" android:keyLabel="@string/label_cin_key" 
+        <Key android:codes="-102" android:keyLabel="@string/label_alpha_key"
                 android:popupCharacters="_"
                 android:keyWidth="15%p"/>
         <Key android:keyLabel="@string/popular_domain_0"
                 android:keyOutputText="@string/popular_domain_0"
                 android:popupKeyboard="@xml/popup_domains"
-                android:keyWidth="15%p"/>
-        <Key android:keyLabel="/" android:keyWidth="12%p"/>
+                android:keyWidth="12%p"/>
+        <Key android:keyLabel="/" android:keyWidth="15%p"/>
         <Key android:codes="32" android:keyIcon="@drawable/sym_keyboard_space"
                 android:iconPreview="@drawable/sym_keyboard_feedback_space"
                 android:keyWidth="16%p" android:isRepeatable="true"/>
@@ -156,7 +156,7 @@
                 android:popupKeyboard="@xml/kbd_popup_template"
                 android:popupCharacters="_"
                 android:keyWidth="15%p" android:keyEdgeFlags="left"/>
-        <Key android:codes="-103" android:keyLabel="@string/label_cin_key" 
+        <Key android:codes="-102" android:keyLabel="@string/label_alpha_key"
                 android:popupCharacters="_"
                 android:keyWidth="15%p"/>
         <Key android:keyLabel="\@" android:keyWidth="12%p"/>
@@ -179,7 +179,7 @@
                 android:popupKeyboard="@xml/kbd_popup_template"
                 android:popupCharacters="_"
                 android:keyWidth="15%p" android:keyEdgeFlags="left"/>
-        <Key android:codes="-103" android:keyLabel="@string/label_cin_key" 
+        <Key android:codes="-102" android:keyLabel="@string/label_alpha_key"
                 android:popupCharacters="_"
                 android:keyWidth="15%p"/>
         <Key android:keyLabel="," android:keyWidth="10%p"/>

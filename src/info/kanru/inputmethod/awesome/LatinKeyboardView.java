@@ -33,6 +33,8 @@ public class LatinKeyboardView extends KeyboardView {
 
     static final int KEYCODE_OPTIONS = -100;
     static final int KEYCODE_SHIFT_LONGPRESS = -101;
+    static final int KEYCODE_ALPHA_MODE = -102;
+    static final int KEYCODE_CIN_MODE = -103;
 
     private Keyboard mPhoneKeyboard;
 

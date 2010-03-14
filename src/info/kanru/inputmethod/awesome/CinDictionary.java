@@ -63,7 +63,7 @@ public class CinDictionary extends Dictionary {
             else
                 r = m;
         }
-        return m * mItemSize + mHeaderSize;
+        return r * mItemSize + mHeaderSize;
     }
 
     private String readLine() throws IOException {
@@ -114,7 +114,6 @@ public class CinDictionary extends Dictionary {
             //System.out.println("seek: " + pos);
             for (int i = 0; i < nph; i++) {
                 String v = readLine();
-                //Log.i(TAG, "Add word: " + v);
                 callback.addWord(v.toCharArray(), 0, v.length(), nph-i);
             }
         } catch (IOException e) {
