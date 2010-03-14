@@ -16,6 +16,7 @@
 
 package info.kanru.inputmethod.awesome;
 
+import android.inputmethodservice.Keyboard;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;

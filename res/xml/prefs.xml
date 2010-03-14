@@ -16,8 +16,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/english_ime_settings"
-        android:key="english_ime_settings">
-
+        android:key="awesome_ime_settings">
     <CheckBoxPreference
             android:key="vibrate_on"
             android:title="@string/vibrate_on_keypress"

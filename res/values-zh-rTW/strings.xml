@@ -15,8 +15,8 @@
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="english_ime_name" msgid="7252517407088836577">"Android 鍵盤"</string>
-    <string name="english_ime_settings" msgid="6661589557206947774">"Android 鍵盤設定"</string>
+    <string name="english_ime_name" msgid="7252517407088836577">"Awesome 鍵盤"</string>
+    <string name="english_ime_settings" msgid="6661589557206947774">"Awesome 鍵盤設定"</string>
     <string name="vibrate_on_keypress" msgid="5258079494276955460">"按鍵時震動"</string>
     <string name="sound_on_keypress" msgid="6093592297198243644">"按鍵時播放音效"</string>
     <string name="hit_correction" msgid="4855351009261318389">"修正輸入錯誤"</string>
@@ -83,6 +83,7 @@
     <string name="label_symbol_key" msgid="6175820506864489453">"?123"</string>
     <string name="label_phone_key" msgid="4275497665515080551">"123"</string>
     <string name="label_alpha_key" msgid="8864943487292437456">"ABC"</string>
+    <string name="label_cin_key">中</string>
     <string name="label_alt_key" msgid="2846315350346694811">"ALT"</string>
     <string name="open_the_keyboard" msgid="2215920976029260466"><font size="17"><b>"開啟鍵盤"\n</b></font><font size="3">\n</font>"輕觸任何文字欄位。"</string>
     <string name="close_the_keyboard" msgid="6251022259044940103"><font size="17"><b>"關閉鍵盤"\n</b></font><font size="3">\n</font>"按下 Back 鍵。"</string>
