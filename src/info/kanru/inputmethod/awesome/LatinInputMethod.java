@@ -76,7 +76,6 @@ public class LatinInputMethod extends InputMethod {
     private UserDictionary mUserDictionary;
     private ContactsDictionary mContactsDictionary;
     private ExpandableDictionary mAutoDictionary;
-    private CinDictionary mCinDictionary;
 
     private StringBuilder mComposing = new StringBuilder();
     private WordComposer mWord = new WordComposer();
@@ -243,13 +242,8 @@ public class LatinInputMethod extends InputMethod {
             return;
         }
 
-        List<CharSequence> stringList;
-        if (mService.isCinMode())
-            stringList = getSuggest().getCinSuggestions(mService.getInputView(),
-                                                                 getWord());
-        else
-            stringList = getSuggest().getSuggestions(mService.getInputView(),
-                                                              getWord(), false);
+        List<CharSequence> stringList = getSuggest().getSuggestions(mService.getInputView(),
+                                                                    getWord(), false);
         boolean correctionAvailable = getSuggest().hasMinimalCorrection();
         //|| mCorrectionMode == mSuggest.CORRECTION_FULL;
         CharSequence typedWord = getWord().getTypedWord();
@@ -265,9 +259,6 @@ public class LatinInputMethod extends InputMethod {
         if (stringList.size() > 0) {
             if (correctionAvailable && !typedWordValid && stringList.size() > 1) {
                 setBestWord(stringList.get(1));
-            } else if (mService.isCinMode() &&
-                       stringList.size() > 0) {
-                setBestWord(stringList.get(0));
             } else {
                 setBestWord(typedWord);
             }
@@ -293,7 +284,7 @@ public class LatinInputMethod extends InputMethod {
         TextEntryState.acceptedSuggestion(getComposing().toString(),
                                           suggestion);
         // Follow it with a space
-        if (mService.isAutoSpace() && !mService.isCinMode()) {
+        if (mService.isAutoSpace()) {
             mService.sendSpace();
             // Fool the state watcher so that a subsequent backspace will not do a revert
             TextEntryState.typedCharacter((char) AwesomeIME.KEYCODE_SPACE, true);
@@ -404,23 +395,18 @@ public class LatinInputMethod extends InputMethod {
                  || getJustRevertedSeparator().charAt(0) != primaryCode)) {
                 pickDefaultSuggestion();
                 pickedDefault = true;
-            } else if (mService.isCinMode()) {
-                pickDefaultSuggestion();
-                pickedDefault = true;
             } else {
                 commitTyped(ic);
             }
         }
-        if (!mService.isCinMode()) {
-            mService.sendKeyChar((char)primaryCode);
-            TextEntryState.typedCharacter((char) primaryCode, true);
-            if (TextEntryState.getState() == TextEntryState.STATE_PUNCTUATION_AFTER_ACCEPTED 
-                && primaryCode != KEYCODE_ENTER) {
-                swapPunctuationAndSpace();
-            } else if (isPredictionOn() && primaryCode == ' ') { 
-                //else if (TextEntryState.STATE_SPACE_AFTER_ACCEPTED) {
-                doubleSpace();
-            }
+        mService.sendKeyChar((char)primaryCode);
+        TextEntryState.typedCharacter((char) primaryCode, true);
+        if (TextEntryState.getState() == TextEntryState.STATE_PUNCTUATION_AFTER_ACCEPTED 
+            && primaryCode != KEYCODE_ENTER) {
+            swapPunctuationAndSpace();
+        } else if (isPredictionOn() && primaryCode == ' ') { 
+            //else if (TextEntryState.STATE_SPACE_AFTER_ACCEPTED) {
+            doubleSpace();
         }
         if (pickedDefault && getBestWord() != null) {
             TextEntryState.acceptedDefault(getWord().getTypedWord(),
@@ -449,7 +435,8 @@ public class LatinInputMethod extends InputMethod {
     
     private void doubleSpace() {
         //if (!mAutoPunctuate) return;
-        if (getCorrectionMode() == Suggest.CORRECTION_NONE) return;
+        if (getCorrectionMode() == Suggest.CORRECTION_NONE)
+            return;
         final InputConnection ic = mService.getCurrentInputConnection();
         if (ic == null) return;
         CharSequence lastThree = ic.getTextBeforeCursor(3, 0);
@@ -467,8 +454,7 @@ public class LatinInputMethod extends InputMethod {
     
 
     private void handleCharacter(int primaryCode, int[] keyCodes) {
-        if (mService.isCinMode() ||
-            isAlphabet(primaryCode) && isPredictionOn() &&
+        if (isAlphabet(primaryCode) && isPredictionOn() &&
             !isCursorTouchingWord()) {
             if (!isPredicting()) {
                 setPredicting(true);
@@ -538,17 +524,16 @@ public class LatinInputMethod extends InputMethod {
             setPredicting(true);
             ic.beginBatchEdit();
             setJustRevertedSeparator(ic.getTextBeforeCursor(1, 0));
-            if (deleteChar) ic.deleteSurroundingText(1, 0);
-            if (!mService.isCinMode()) {
-                int toDelete = mService.getCommittedLength();
-                CharSequence toTheLeft = ic.getTextBeforeCursor(mService.getCommittedLength(),
-                                                                0);
-                if (toTheLeft != null && toTheLeft.length() > 0 
-                    && isWordSeparator(toTheLeft.charAt(0))) {
-                    toDelete--;
-                }
-                ic.deleteSurroundingText(toDelete, 0);
+            if (deleteChar)
+                ic.deleteSurroundingText(1, 0);
+            int toDelete = mService.getCommittedLength();
+            CharSequence toTheLeft = ic.getTextBeforeCursor(mService.getCommittedLength(),
+                                                            0);
+            if (toTheLeft != null && toTheLeft.length() > 0 
+                && isWordSeparator(toTheLeft.charAt(0))) {
+                toDelete--;
             }
+            ic.deleteSurroundingText(toDelete, 0);
             ic.setComposingText(getComposing(), 1);
             TextEntryState.backspace();
             ic.endBatchEdit();
@@ -684,13 +669,9 @@ public class LatinInputMethod extends InputMethod {
         mUserDictionary = new UserDictionary(mService);
         //mContactsDictionary = new ContactsDictionary(this);
         mAutoDictionary = new AutoDictionary(mService);
-        try {
-            mCinDictionary = new CinDictionary("/sdcard/NewCJ3.tbl");
-        } catch (IOException e) {}
         mSuggest.setUserDictionary(mUserDictionary);
         //mSuggest.setContactsDictionary(mContactsDictionary);
         mSuggest.setAutoDictionary(mAutoDictionary);
-        mSuggest.setCinDictionary(mCinDictionary);
         mWordSeparators = mService.getResources().getString(R.string.word_separators);
         mSentenceSeparators = mService.getResources().getString(R.string.sentence_separators);
     }
@@ -727,9 +708,6 @@ public class LatinInputMethod extends InputMethod {
     public void close() {
         mUserDictionary.close();
         //mContactsDictionary.close();
-        try {
-            mCinDictionary.close();
-        } catch (IOException e) {}
     }
 
     public void setAutoCorrectOn(boolean autoCorrectOn) {

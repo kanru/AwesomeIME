@@ -82,6 +82,8 @@ public class AwesomeIME extends InputMethodService {
     private KeyboardSwitcher mKeyboardSwitcher;
     
     private InputMethod mInputMethod;
+    private InputMethod mLatinInputMethod;
+    private InputMethod mCinInputMethod;
     
     private int mCommittedLength;
     private boolean mCompletionOn;
@@ -104,8 +106,11 @@ public class AwesomeIME extends InputMethodService {
         //setStatusIcon(R.drawable.ime_qwerty);
         mKeyboardSwitcher = new KeyboardSwitcher(this);
 
-        mInputMethod = new LatinInputMethod(this);
-        mInputMethod.initSuggest();
+        mLatinInputMethod = new LatinInputMethod(this);
+        mCinInputMethod = new CinInputMethod(this);
+        mLatinInputMethod.initSuggest();
+        mCinInputMethod.initSuggest();
+        mInputMethod = mLatinInputMethod;
 
         final Configuration conf = getResources().getConfiguration();
         mOrientation = conf.orientation;
@@ -118,7 +123,8 @@ public class AwesomeIME extends InputMethodService {
     }
 
     @Override public void onDestroy() {
-        mInputMethod.close();
+        mLatinInputMethod.close();
+        mCinInputMethod.close();
         unregisterReceiver(mReceiver);
         super.onDestroy();
     }
@@ -171,7 +177,7 @@ public class AwesomeIME extends InputMethodService {
         mCapsLock = false;
         TextEntryState.newSession(this);
 
-        boolean autoCorrectOn = false;
+        boolean autoCorrectOn = true;
         boolean predictionOn = false;
         mCompletionOn = false;
         mCompletions = null;
@@ -222,7 +228,7 @@ public class AwesomeIME extends InputMethodService {
                     // If it's a browser edit field and auto correct is not ON explicitly, then
                     // disable auto correction, but keep suggestions on.
                     if ((attribute.inputType & EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT) == 0) {
-                        autoCorrectOn = true;
+                        autoCorrectOn = false;
                     }
                     break;
                 default:
@@ -231,23 +237,23 @@ public class AwesomeIME extends InputMethodService {
                 // If NO_SUGGESTIONS is set, don't do prediction.
                 if ((attribute.inputType & EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS) != 0) {
                     predictionOn = false;
-                    autoCorrectOn = true;
+                    autoCorrectOn = false;
                 }
                 // If it's not multiline and the autoCorrect flag is not set, then don't correct
                 if ((attribute.inputType & EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT) == 0 &&
                     (attribute.inputType & EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE) == 0) {
-                    autoCorrectOn = true;
+                    autoCorrectOn = false;
                 }
                 if ((attribute.inputType & EditorInfo.TYPE_TEXT_FLAG_AUTO_COMPLETE) != 0) {
                     predictionOn = false;
                     mCompletionOn = isFullscreenMode();
                 }
-                mInputMethod.updateShiftKeyState(attribute);
+                mLatinInputMethod.updateShiftKeyState(attribute);
                 break;
             default:
                 mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_TEXT,
                                                   attribute.imeOptions);
-                mInputMethod.updateShiftKeyState(attribute);
+                mLatinInputMethod.updateShiftKeyState(attribute);
         }
         mInputView.closing();
         setCandidatesViewShown(false);
@@ -256,9 +262,9 @@ public class AwesomeIME extends InputMethodService {
             mCandidateView.setSuggestions(null, false, false, false);
 
         loadSettings();
-        mInputMethod.loadSettings();
-        mInputMethod.setPredictionOn(predictionOn);
-        mInputMethod.setAutoCorrectOn(autoCorrectOn);
+        mLatinInputMethod.loadSettings();
+        mLatinInputMethod.setPredictionOn(predictionOn);
+        mLatinInputMethod.setAutoCorrectOn(autoCorrectOn);
         mInputView.setProximityCorrectionEnabled(true);
 
         if (TRACE)
@@ -409,10 +415,16 @@ public class AwesomeIME extends InputMethodService {
 
     public void setAlphaMode() {
         mKeyboardSwitcher.setAlphaMode();
+        mInputMethod.commitTyped(getCurrentInputConnection());
+        mInputMethod = mLatinInputMethod;
+        mInputView.setOnKeyboardActionListener(mInputMethod);
     }
 
     public void setCinMode() {
         mKeyboardSwitcher.setCinMode();
+        mInputMethod.commitTyped(getCurrentInputConnection());
+        mInputMethod = mCinInputMethod;
+        mInputView.setOnKeyboardActionListener(mInputMethod);
     }
 
     public boolean isSwitchKeyboardBack(int primaryCode) {
