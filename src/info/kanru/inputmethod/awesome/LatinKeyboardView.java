@@ -57,7 +57,7 @@ public class LatinKeyboardView extends KeyboardView {
             return true;
         } else if (key.codes[0] == Keyboard.KEYCODE_SHIFT) {
             getOnKeyboardActionListener().onKey(KEYCODE_SHIFT_LONGPRESS, null);
-            invalidateAllKeys();
+            //invalidateAllKeys();
             return true;
         } else if (key.codes[0] == '0' && getKeyboard() == mPhoneKeyboard) {
             // Long pressing on 0 in phone number keypad gives you a '+'.

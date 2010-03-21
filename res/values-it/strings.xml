@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Tieni premuto sulla parola all\'estrema sinistra per aggiungerla al dizionario"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Tocca questo suggerimento per continuare »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Tocca qui per chiudere questo suggerimento e iniziare a digitare."</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"La tastiera si apre ogni volta che tocchi un campo di testo"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Tocca e tieni premuto un tasto per visualizzare le lettere con segni diacritici"\n"(ø, ö, ô, ó e così via)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Passa a numeri e simboli toccando questo tasto"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Torna all\'alfabeto toccando di nuovo questo tasto"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Tocca e tieni premuto questo tasto per modificare le impostazioni della tastiera, come il completamento automatico"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Prova."</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Vai"</string>
     <string name="label_next_key" msgid="362972844525672568">"Avanti"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Fine"</string>

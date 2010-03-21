@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Tryk og hold på ordet længst til venstre for at føje det til ordbogen"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Berør dette tip for at fortsætte »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Berør her for at lukke dette tip og begynde at indtaste!"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Tastaturet åbner når som helst, du berører et tekstfelt"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Berør og hold en tast nede for at vise accenter"\n"(ø, ö, ô, ó osv.)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Skift til tal og symboler ved at røre denne tast"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Gå tilbage til bogstaver ved at berøre denne tast igen"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Berør og hold denne tast nede for at ændre tastaturindstillingerne, som f.eks. automatisk udfyldelse"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Prøv det!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Gå"</string>
     <string name="label_next_key" msgid="362972844525672568">"Næste"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Færdig"</string>

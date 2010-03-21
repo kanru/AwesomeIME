@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Sözlüğe eklemek için en soldaki kelimeye basın ve basılı tutun"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Devam etmek için bu ipucuna dokunun »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Bu ipucunu kapatmak için buraya dokunun ve yazmaya başlayın!"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Bir metin alanına dokunduğunuzda klavye açılır"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Vurguları görüntülemek için bir tuşa basın ve basılı tutun"\n"(ø, ö, ô, ó v.b.)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Bu tuşa dokunarak sayılar ve simgeler arasında geçiş yap"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Bu tuşa tekrar dokunarak harflere geri dönün"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Otomatik tamamlama gibi klavye ayarlarını değiştirmek için bu tuşa basın ve basılı tutun"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Deneyin!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Git"</string>
     <string name="label_next_key" msgid="362972844525672568">"İleri"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Bitti"</string>

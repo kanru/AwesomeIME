@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"맨 왼쪽에 있는 단어를 길게 누르면 사전에 추가됩니다."</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"계속하려면 힌트를 터치하세요. »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"힌트를 닫고 입력을 시작하려면 여기를 터치하세요."</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"입력란을 터치하면 키보드가 열립니다."</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"키를 길게 누르면 악센트"\n"(ø, ö, ô, ó 등)를 볼 수 있습니다."</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"이 키를 터치하면 숫자 및 기호 자판으로 변경됩니다."</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"이 키를 다시 터치하면 키보드가 표시됩니다."</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"자동 완성과 같은 키보드 설정을 변경하려면 이 키를 길게 누르세요."</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"이제 직접 사용해 보세요!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"이동"</string>
     <string name="label_next_key" msgid="362972844525672568">"다음"</string>
     <string name="label_done_key" msgid="2441578748772529288">"완료"</string>

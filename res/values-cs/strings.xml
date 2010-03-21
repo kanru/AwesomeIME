@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Stisknutím a podržením slova zcela vlevo toto slovo přidáte do slovníku"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Chcete-li pokračovat, dotkněte se této rady »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Chcete-li tuto radu zavřít a začít psát, dotkněte se zde."</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Klávesnice se zobrazí, kdykoli se dotknete textového pole."</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Stisknutím a podržením klávesy zobrazíte diakritiku"\n"(ó, ø, ö, ô atd.)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Stisknutím této klávesy přejdete do režimu číslic a symbolů"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Opětovným stisknutím této klávesy se vrátíte zpět do režimu písmen"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Chcete-li změnit nastavení klávesnice, jako například automatické dokončování, stiskněte tuto klávesu a podržte ji."</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Zkuste to."</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Přejít"</string>
     <string name="label_next_key" msgid="362972844525672568">"Další"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Hotovo"</string>

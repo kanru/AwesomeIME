@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Appuyer et maintenir le doigt sur le mot le plus à gauche pour l\'ajouter au dictionnaire"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Touchez ce conseil pour continuer »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Touchez ici pour fermer ce conseil et commencer à saisir votre texte."</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Le clavier s\'affiche à chaque fois que vous touchez une zone de texte."</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Maintenez une touche enfoncée pour afficher les accents"\n"(ø, ö, ô, ó, etc.)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Appuyez sur cette touche pour basculer vers les chiffres et les symboles."</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Retourner au clavier en appuyant de nouveau sur cette touche"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Maintenez cette touche enfoncée afin de modifier les paramètres du clavier, tels que la saisie semi-automatique."</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Essayez !"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"OK"</string>
     <string name="label_next_key" msgid="362972844525672568">"Suivant"</string>
     <string name="label_done_key" msgid="2441578748772529288">"OK"</string>

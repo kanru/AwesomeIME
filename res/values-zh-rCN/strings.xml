@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"长按最左侧的字可将其添加到词典中"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"轻触此提示继续 »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"轻触此处可关闭该提示，然后便可开始输入内容！"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"轻触文本字段即可打开键盘"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"长按某些键可看到重音符号"\n"（例如 ø、ö、ô、ó 等）"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"轻触该键可切换到数字和符号输入模式"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"再次轻触该键可返回字母输入模式"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"长按该键可更改键盘设置，例如自动输入"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"试试吧！"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"开始"</string>
     <string name="label_next_key" msgid="362972844525672568">"下一步"</string>
     <string name="label_done_key" msgid="2441578748772529288">"完成"</string>

@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Naciśnij i przytrzymaj słowo po lewej stronie w celu dodania go do słownika"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Dotknij tej podpowiedzi, aby kontynuować »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Dotknij tutaj, aby zamknąć tę podpowiedź i zacząć pisać!"</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Klawiatura jest otwierana po każdym dotknięciu pola tekstowego."</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Dotknij i przytrzymaj klawisz, aby wyświetlić znaki akcentowane"\n"(ą, ę, ł, ó itd.)."</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Przełącz na cyfry i symbole, dotykając tego klawisza."</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Wróć do trybu liter, dotykając ponownie tego klawisza."</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Dotknij i przytrzymaj ten klawisz, aby zmienić ustawienia klawiatury, takie jak autouzupełnianie."</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Wypróbuj!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Przejdź"</string>
     <string name="label_next_key" msgid="362972844525672568">"Dalej"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Gotowe"</string>

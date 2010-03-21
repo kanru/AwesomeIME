@@ -70,12 +70,6 @@
     <string name="tip_add_to_dictionary" msgid="1487293888469227817">"Нажмите и удерживайте слово слева, чтобы добавить его в словарь"</string>
     <string name="touch_to_continue" msgid="7869803257948414531">"Чтобы продолжить, нажмите на эту подсказку »"</string>
     <string name="touch_to_finish" msgid="7990196086480585789">"Нажмите здесь, чтобы закрыть подсказку и начать вводить текст."</string>
-    <string name="tip_to_open_keyboard" msgid="6821200275486950452"><b>"Клавиатура появляется автоматически при касании текстового поля"</b></string>
-    <string name="tip_to_view_accents" msgid="5433158573693308501"><b>"Нажмите и удерживайте клавишу, чтобы появились спецсимволы "\n"(ø, ö, ô, ó и т. п.)"</b></string>
-    <string name="tip_to_open_symbols" msgid="7345139325622444880"><b>"Чтобы переключаться между вводом цифр и символов, используйте эту клавишу"</b></string>
-    <string name="tip_to_close_symbols" msgid="5227724217206927185"><b>"Чтобы вернуться к буквенной клавиатуре, снова нажмите на эту клавишу"</b></string>
-    <string name="tip_to_launch_settings" msgid="8402961128983196128"><b>"Чтобы сменить настройки клавиатуры (такие как автозавершение), нажмите и удерживайте эту клавишу"</b></string>
-    <string name="tip_to_start_typing" msgid="7213843601369174313"><b>"Попробуйте!"</b></string>
     <string name="label_go_key" msgid="1635148082137219148">"Перейти"</string>
     <string name="label_next_key" msgid="362972844525672568">"Далее"</string>
     <string name="label_done_key" msgid="2441578748772529288">"Готово"</string>
