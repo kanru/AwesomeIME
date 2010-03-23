@@ -126,8 +126,11 @@ public class CinDictionary extends Dictionary {
         return false;
     }
 
-    public synchronized void close() throws IOException {
-        fd.close();
+    public synchronized void close() {
+        try {
+            fd.close();
+        } catch (IOException e) {
+        }
     }
 
     @Override protected void finalize() throws Throwable {

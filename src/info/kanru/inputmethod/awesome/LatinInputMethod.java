@@ -73,8 +73,9 @@ public class LatinInputMethod extends InputMethod {
 
     private boolean mPredicting;
 
-    private UserDictionary mUserDictionary;
-    private ContactsDictionary mContactsDictionary;
+    private Dictionary mBinaryDictionary;
+    private ExpandableDictionary mUserDictionary;
+    private Dictionary mContactsDictionary;
     private ExpandableDictionary mAutoDictionary;
 
     private StringBuilder mComposing = new StringBuilder();
@@ -664,14 +665,14 @@ public class LatinInputMethod extends InputMethod {
     }
 
     public void initSuggest() {
-        mSuggest = new Suggest(mService, R.raw.main);
+        mSuggest = new Suggest(mService);
         mSuggest.setCorrectionMode(mCorrectionMode);
+        mBinaryDictionary = new BinaryDictionary(mService, R.raw.main);
         mUserDictionary = new UserDictionary(mService);
         //mContactsDictionary = new ContactsDictionary(this);
         mAutoDictionary = new AutoDictionary(mService);
-        mSuggest.setUserDictionary(mUserDictionary);
-        //mSuggest.setContactsDictionary(mContactsDictionary);
-        mSuggest.setAutoDictionary(mAutoDictionary);
+        mSuggest.addDictionary(mUserDictionary);
+        mSuggest.addDictionary(mBinaryDictionary);
         mWordSeparators = mService.getResources().getString(R.string.word_separators);
         mSentenceSeparators = mService.getResources().getString(R.string.sentence_separators);
     }

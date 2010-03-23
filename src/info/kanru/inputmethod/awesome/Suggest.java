@@ -37,15 +37,7 @@ public class Suggest implements Dictionary.WordCallback {
     public static final int CORRECTION_BASIC = 1;
     public static final int CORRECTION_FULL = 2;
 
-    private Dictionary mMainDict;
-
-    private Dictionary mUserDictionary;
-
-    private Dictionary mAutoDictionary;
-
-    private Dictionary mContactsDictionary;
-
-    private Dictionary mCinDictionary;
+    private ArrayList<Dictionary> mDictList = new ArrayList<Dictionary>();
 
     private int mPrefMaxSuggestions = 12;
 
@@ -61,13 +53,16 @@ public class Suggest implements Dictionary.WordCallback {
     private int mCorrectionMode = CORRECTION_BASIC;
 
 
-    public Suggest(Context context, int dictionaryResId) {
+    public Suggest(Context context) {
         mContext = context;
-        mMainDict = new BinaryDictionary(context, dictionaryResId);
         for (int i = 0; i < mPrefMaxSuggestions; i++) {
             StringBuilder sb = new StringBuilder(32);
             mStringPool.add(sb);
-        }
+        }        
+    }
+
+    public void addDictionary(Dictionary dict) {
+        mDictList.add(dict);
     }
 
     public int getCorrectionMode() {
@@ -76,29 +71,6 @@ public class Suggest implements Dictionary.WordCallback {
 
     public void setCorrectionMode(int mode) {
         mCorrectionMode = mode;
-    }
-
-    /**
-     * Sets an optional user dictionary resource to be loaded. The user dictionary is consulted
-     * before the main dictionary, if set.
-     */
-    public void setUserDictionary(Dictionary userDictionary) {
-        mUserDictionary = userDictionary;
-    }
-
-    /**
-     * Sets an optional contacts dictionary resource to be loaded.
-     */
-    public void setContactsDictionary(Dictionary userDictionary) {
-        mContactsDictionary = userDictionary;
-    }
-    
-    public void setAutoDictionary(Dictionary autoDictionary) {
-        mAutoDictionary = autoDictionary;
-    }
-
-    public void setCinDictionary(Dictionary cinDictionary) {
-        mCinDictionary = cinDictionary;
     }
 
     /**
@@ -157,7 +129,7 @@ public class Suggest implements Dictionary.WordCallback {
      * @return list of suggestions.
      */
     public List<CharSequence> getSuggestions(View view, WordComposer wordComposer, 
-            boolean includeTypedWordIfValid) {
+                                             boolean includeTypedWordIfValid) {
         mHaveCorrection = false;
         collectGarbage();
         Arrays.fill(mPriorities, 0);
@@ -171,25 +143,12 @@ public class Suggest implements Dictionary.WordCallback {
         } else {
             mLowerOriginalWord = "";
         }
-        // Search the dictionary only if there are at least 2 characters
-        if (wordComposer.size() > 1) {
-            if (mUserDictionary != null || mContactsDictionary != null) {
-                if (mUserDictionary != null) {
-                    mUserDictionary.getWords(wordComposer, this);
-                }
-                if (mContactsDictionary != null) {
-                    mContactsDictionary.getWords(wordComposer, this);
-                }
 
-                if (mSuggestions.size() > 0 && isValidWord(mOriginalWord)) {
-                    mHaveCorrection = true;
-                }
-            }
-            mMainDict.getWords(wordComposer, this);
-            if (mCorrectionMode == CORRECTION_FULL && mSuggestions.size() > 0) {
-                mHaveCorrection = true;
-            }
+        for (Dictionary dict: mDictList) {
+            dict.getWords(wordComposer, this);
         }
+        if (mCorrectionMode == CORRECTION_FULL && mSuggestions.size() > 0)
+            mHaveCorrection = true;
         if (mOriginalWord != null) {
             mSuggestions.add(0, mOriginalWord.toString());
         }
@@ -241,8 +200,8 @@ public class Suggest implements Dictionary.WordCallback {
         } else {
             mLowerOriginalWord = "";
         }
-        if (mCinDictionary != null) {
-            mCinDictionary.getWords(wordComposer, this);
+        for (Dictionary dict: mDictList) {
+            dict.getWords(wordComposer, this);
         }
         return mSuggestions;
     }
@@ -335,14 +294,22 @@ public class Suggest implements Dictionary.WordCallback {
     }
 
     public boolean isValidWord(final CharSequence word) {
-        if (word == null || word.length() == 0) {
+        if (word == null || word.length() == 0 || mDictList.size() == 0) {
             return false;
         }
-        return (mCorrectionMode == CORRECTION_FULL && mMainDict.isValidWord(word)) 
-                || (mCorrectionMode > CORRECTION_NONE && 
-                    ((mUserDictionary != null && mUserDictionary.isValidWord(word)))
-                     || (mAutoDictionary != null && mAutoDictionary.isValidWord(word))
-                     || (mContactsDictionary != null && mContactsDictionary.isValidWord(word)));
+        /* FIXME: CORRECTION_FULL should check the main dictionary.
+                  For now we don't know which one is the main dictionary.
+                  Just assume the last one is the main one.
+        */
+        if (mCorrectionMode == CORRECTION_FULL)
+            return mDictList.get(mDictList.size()-1).isValidWord(word);
+        if (mCorrectionMode > CORRECTION_NONE) {
+            for (int i = 0; i < mDictList.size()-1; ++i) {
+                if (mDictList.get(i).isValidWord(word))
+                    return true;
+            }
+        }
+        return false;
     }
     
     private void collectGarbage() {

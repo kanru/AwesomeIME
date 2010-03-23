@@ -198,11 +198,11 @@ public class CinInputMethod extends InputMethod {
     }
 
     public void initSuggest() {
-        mSuggest = new Suggest(mService, R.raw.main);
+        mSuggest = new Suggest(mService);
         try {
             mCinDictionary = new CinDictionary("/sdcard/NewCJ3.tbl");
         } catch (IOException e) {}
-        mSuggest.setCinDictionary(mCinDictionary);
+        mSuggest.addDictionary(mCinDictionary);
     }
 
     public void close() {
