@@ -123,7 +123,7 @@ public class CinDictionary extends Dictionary {
     }
 
     @Override public boolean isValidWord(CharSequence word) {
-        return false;
+        return true;
     }
 
     public synchronized void close() {
